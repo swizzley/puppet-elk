@@ -1,0 +1,6 @@
+output {
+    if "_grokparsefailure" not in [tags] {
+      elasticsearch { }
+    }
+    stdout { codec => rubydebug }
+}

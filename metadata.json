@@ -1,0 +1,79 @@
+{
+    "author": "Dustin Morgan <morgan@aspendenver.org>",
+    "dependencies": [
+        {
+            "name": "puppetlabs/stdlib",
+            "version_requirement": ">=4.6.0 <5.0.0"
+        },
+        {
+            "name": "puppetlabs/java",
+            "version_requirement": ">=1.4.1 <5.0.0"
+        },
+        {
+            "name": "puppetlabs/rabbitmq",
+            "version_requirement": ">=5.2.3 <6.0.0"
+        },
+        {
+            "name": "puppetlabs/haproxy",
+            "version_requirement": ">=1.2.0 <2.0.0"
+        },
+        {
+            "name": "elasticsearch/elasticsearch",
+            "version_requirement": ">=0.9.8 <5.0.0"
+        },
+        {
+            "name": "elasticsearch/logstash",
+            "version_requirement": ">=0.5.1 <5.0.0"
+        },
+        {
+            "name": "elasticsearch/logstashforwarder",
+            "version_requirement": ">=0.1.1 <5.0.0"
+        },
+        {
+            "name": "evenup/kibana",
+            "version_requirement": ">=2.1.0 <5.0.0"
+        }
+    ],
+    "license": "Apache-2.0",
+    "name": "swizzley88-elk",
+    "operatingsystem_support": [
+        {
+            "operatingsystem": "RedHat",
+            "operatingsystemrelease": [
+                "6",
+                "7"
+            ]
+        },
+        {
+            "operatingsystem": "CentOS",
+            "operatingsystemrelease": [
+                "6",
+                "7"
+            ]
+        }
+    ],
+    "project_page": "https://github.com/swizzley/puppet-elk",
+    "requirements": [
+        {
+            "name": "pe",
+            "version_requirement": "3.x"
+        },
+        {
+            "name": "puppet",
+            "version_requirement": ">=2.7.20 <4.0.0"
+        }
+    ],
+    "source": "https://github.com/swizzley/puppet-elk",
+    "issues_url": "https://github.com/swizzley/puppet-elk/issues",
+    "summary": "Full ELK stack stand-alone, cluster, and client initial setup",
+    "tags": [
+        "ELK",
+        "elasticsearch",
+        "logstash",
+        "lumberjack",
+        "kibana",
+        "logstashforwarder",
+        "logstash-forwarder"
+    ],
+    "version": "0.1.0"
+}
