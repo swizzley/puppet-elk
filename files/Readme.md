@@ -39,7 +39,7 @@ Create a directory per box, and from within that directory, the vagrant command 
   
 #### Private_Boxes
 
-  * None yet
+  * 
   
 ## Vagrantfiles
 
