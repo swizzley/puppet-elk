@@ -109,7 +109,5 @@ Create a directory per box, and from within that directory, the vagrant command 
 After ```vagrant up```, everything should be good to go, so just login and run puppet. If you want you can create your puppet and hiera forks as git submodules inside your vagrant fork and modify the vagrant files to provision the actual puppet code all at once. =-) That way you just ```vagrant up``` and you're done, but because those submodules are specific to individual forks, there's no reasonable way to make that part of this upstream repo.
 
   ```
-  vagrant ssh
-  sudo su -
-  puppet apply -vt --debug site.pp
+  vagrant up
   ```
