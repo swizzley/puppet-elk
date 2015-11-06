@@ -88,7 +88,7 @@ Create a directory per box, and from within that directory, the vagrant command 
  
   ```
   unlink Vagrantfile
-  ln -s ./Vagrantfiles/gui.rb Vagrantfile
+  ln -s ./Vagrantfiles/elk.rb Vagrantfile
   ```
  
   * If switching the Vagrantfile after having done a vagrant up, do this after relinking:
