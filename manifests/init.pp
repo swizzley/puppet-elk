@@ -1,4 +1,4 @@
-# Class: scout::elk
+# Class: elk
 #
 # This module deploys the ELK stack in the best way
 #

@@ -45,6 +45,7 @@ class elk::params {
   $es_unicast_ip = ''
   $es_url = "http://${elasticsearch}"
   $data_dir = ''
+  $url_elasticsearch_plugin_hq = ''
 
   # Logstash Vars
   $pvt_key = 'puppet:///private/logstash-forwarder.key'

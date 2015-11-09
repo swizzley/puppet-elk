@@ -8,8 +8,8 @@ define elk::elasticsearch ($master, $data, $parity, $cors, $unicast, $path, $clu
   validate_string($unicast)
   validate_absolute_path($path)
 
-  include scout::elk::java
-  require scout::elk::java
+  include elk::java
+  require elk::java
   include ::elasticsearch
 
   if ($role == 'elastic') {
@@ -59,7 +59,7 @@ define elk::elasticsearch ($master, $data, $parity, $cors, $unicast, $path, $clu
   }
 
   elasticsearch::plugin { 'HQ':
-    url       => 'http://yumrepo.sys.comcast.net/se_networkscout/noarch/noarch/ELK/royrusso-elasticsearch-HQ-603ae9e.zip',
+    url       => $url_elasticsearch_plugin_hq,
     instances => "${::org}",
     require   => [File['/app/platform/elasticsearch/bin/plugin'], File['/app/platform/elasticsearch/plugins/HQ'],]
   }
