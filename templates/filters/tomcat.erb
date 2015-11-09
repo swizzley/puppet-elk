@@ -1,0 +1,12 @@
+
+       if [type] == "tomcat" {
+         multiline {
+           pattern => "^%{TOM_TIME}"
+           negate => true
+           what => "previous"
+         }
+         grok {
+           match => { "message" => "%{TOMCATLINE}" }
+         }
+       }
+

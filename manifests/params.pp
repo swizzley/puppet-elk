@@ -37,6 +37,7 @@ class elk::params {
   }
 
   # Elasticsearch Vars
+  $elasticsearch_version = '1.7.1'
   $elasticsearch = ''
   $cluster_name = ''
   $es_cluster = []

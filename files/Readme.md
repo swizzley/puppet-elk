@@ -38,7 +38,7 @@ Vagrant is a CLI tool only. Using it will allow you to build, rebuild, and desto
 1. Create 2 git repos, example:```github.com/puppet```
 2. Create github deploy keys
 5. Link a server template in your fork, eg: Scout-Vagrant/Vagrantfile -> Scout-Vagrant/Vagrantfiles/gui.rb
-6. ```vagrant up``` or ```vagrant destroy -f && vagrant up``` if you want to start fresh or ```vagrant provision``` if you modified provision/scout.pp or ```vagrant reload``` if you modified Vagrantfile, or changed hardware from VirtualBox gui
+6. ```vagrant up``` or ```vagrant destroy -f && vagrant up``` if you want to start fresh or ```vagrant provision``` if you modified provision/vagrant_site.pp or ```vagrant reload``` if you modified Vagrantfile, or changed hardware from VirtualBox gui
 7. ```vagrant ssh```
 8. ```sudo su -```
 9. ```puppet apply -vt --debug site.pp```
@@ -55,7 +55,7 @@ Vagrant is a CLI tool only. Using it will allow you to build, rebuild, and desto
   ``` cat ~/.ssh/id_rsa.hiera.pub ```
   
   
-  * Paste the public and private keys into your fork of this repo at the top of provision/scout.pp as variables along with your NTID
+  * Paste the public and private keys into your fork of this repo at the top of provision/vagrant_sit.pp as variables along with your NTID
   
   ```  # Configure the values for your forks   ```
   
@@ -67,7 +67,7 @@ Vagrant is a CLI tool only. Using it will allow you to build, rebuild, and desto
   
   ```  $deploy_hiera_public = ''  ```
   
-  ```  $$deploy_pvtkey_git_ID = ''  ```
+  ```  $deploy_pvtkey_git_ID = ''  ```
 
   * Clone your fork of this repo onto your local environmet
   * unlink and link the Vagrant file to the file specific to your testing if necessary [default: gui{1cpu, 512mb, NAT}]

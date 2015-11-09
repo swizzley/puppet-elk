@@ -1,0 +1,9 @@
+###  <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} thread="%thread" level="%-5level" logger="%logger{36}" - %msg%n</pattern>
+#
+THREAD (thread=)(?:%{QS:thread})
+LEVEL (level=)(?:%{QS:level})
+LOGGER (logger=)(?:%{QS:logger})
+LOGGER_MSG (\-.*)
+TOM_TIME %{TIMESTAMP_ISO8601:tomcat_timestamp}
+
+TOMCATLINE %{BPOL_TIME} %{THREAD} %{LEVEL} %{LOGGER} %{LOGGER_MSG:logger_msg}

@@ -1,0 +1,25 @@
+    }
+  }
+}
+output {
+    if "rabbitmq" not in [tags] {
+        rabbitmq {
+          host => "<%= @elk %>"
+          user => "<%= @rmq_user %>"
+          password => "<%= @rmq_pass %>"
+          exchange => "logstash-rabbitmq"
+          exchange_type => "direct"
+          key => "logstash"
+          vhost => "logstash"
+          durable => true
+          persistent => true
+        }
+    }
+    if "lumberjack" not in [tags] {
+        if "rabbitmq" not in [tags] {
+            elasticsearch { host => "<%= @elk %>"}
+            #stdout { codec => rubydebug }
+        }
+    }
+    #stdout { codec => rubydebug }
+}

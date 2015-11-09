@@ -2,10 +2,21 @@
 #
 # This provisions an elasticsearch host, both cluster members types and stand-alone
 #
-define elk::elasticsearch ($master, $data, $parity, $cors, $unicast, $path, $cluster_name = $title, $role = 'elastic') {
+define elk::elasticsearch (
+  $master,
+  $data,
+  $parity,
+  $cors,
+  $unicast,
+  $path,
+  $cluster_name = $title,
+  $role         = 'elastic',
+  $org          = 'elk',
+  $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v1.0.0.zip') {
   validate_bool($master, $data, $cors)
   validate_integer($parity)
   validate_string($unicast)
+  validate_string($org)
   validate_absolute_path($path)
 
   include elk::java
@@ -60,7 +71,7 @@ define elk::elasticsearch ($master, $data, $parity, $cors, $unicast, $path, $clu
 
   elasticsearch::plugin { 'HQ':
     url       => $url_elasticsearch_plugin_hq,
-    instances => "${::org}",
+    instances => "${org}",
     require   => [File['/app/platform/elasticsearch/bin/plugin'], File['/app/platform/elasticsearch/plugins/HQ'],]
   }
 
