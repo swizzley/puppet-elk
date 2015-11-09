@@ -27,19 +27,7 @@ Vagrant is a CLI tool only. Using it will allow you to build, rebuild, and desto
   * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
   * Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
   
-## Our_Boxes
-
-These boxes were built specifically for the Scout team. 
-
-#### Public_Boxes
-
-Create a directory per box, and from within that directory, the vagrant command is always relative to that box. 
-
   * ```vagrant init swizzley88/centos-6.6-64_puppet-3.8; vagrant up --provider virtualbox```
-  
-#### Private_Boxes
-
-  * 
   
 ## Vagrantfiles
 
@@ -47,10 +35,8 @@ Create a directory per box, and from within that directory, the vagrant command 
   
 ## Setup
 
-1. Fork the repos
+1. Create 2 git repos, example:```github.com/puppet```
 2. Create github deploy keys
-3. Git clone your vagrant fork
-4. Paste keys & ntid into your fork's provision/scout.pp
 5. Link a server template in your fork, eg: Scout-Vagrant/Vagrantfile -> Scout-Vagrant/Vagrantfiles/gui.rb
 6. ```vagrant up``` or ```vagrant destroy -f && vagrant up``` if you want to start fresh or ```vagrant provision``` if you modified provision/scout.pp or ```vagrant reload``` if you modified Vagrantfile, or changed hardware from VirtualBox gui
 7. ```vagrant ssh```
@@ -108,6 +94,4 @@ Create a directory per box, and from within that directory, the vagrant command 
 
 After ```vagrant up```, everything should be good to go, so just login and run puppet. If you want you can create your puppet and hiera forks as git submodules inside your vagrant fork and modify the vagrant files to provision the actual puppet code all at once. =-) That way you just ```vagrant up``` and you're done, but because those submodules are specific to individual forks, there's no reasonable way to make that part of this upstream repo.
 
-  ```
-  vagrant up
-  ```
+```vagrant init swizzley88/centos-6.6-64_puppet-3.8; vagrant up --provider virtualbox```
