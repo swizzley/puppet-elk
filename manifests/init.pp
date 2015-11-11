@@ -6,38 +6,7 @@ class elk ($elk = $::elk::params::elk, $cluster_name = $::elk::params::cluster_n
   validate_string($es_unicast_ip)
   case $elk {
     'Elastic'  : {
-      case $::hostname {
-        "${es_master}" : {
-          elk::elasticsearch { $cluster_name:
-            master  => true,
-            data    => true,
-            cors    => false,
-            parity  => 0,
-            unicast => $es_unicast_ip,
-            path    => $data_dir,
-          }
-        }
-        "${c10k}"      : {
-          elk::elasticsearch { $cluster_name:
-            master  => false,
-            data    => false,
-            cors    => true,
-            parity  => 0,
-            unicast => $es_unicast_ip,
-            path    => $data_dir,
-          }
-        }
-        default        : {
-          elk::elasticsearch { $cluster_name:
-            master  => false,
-            data    => true,
-            cors    => false,
-            parity  => 0,
-            unicast => $es_unicast_ip,
-            path    => $data_dir,
-          }
-        }
-      }
+      include elk::elastic_node
     }
     'Logstash' : {
       include elk::logstash
