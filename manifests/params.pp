@@ -11,19 +11,19 @@ class elk::params {
       'es-vg-v1d', 'es-vg-v2d', 'es-vg-v3d' ]
 
   case $::fqdn {
-    /es-vg-v.d/   : {
+    /es-vg-v.d.*/   : {
       $elk = 'Elastic'
     }
     /log-vg-v.d/   : {
       $elk = 'Logstash'
     }
-    /kib-vg-v.d/   : {
+    /kib-vg-v.d.*/   : {
       $elk = 'Kibana'
     }
-    /elkq-vg-v.d/  : {
+    /elkq-vg-v.d.*/  : {
       $elk = 'MQ'
     }
-    /elk-vg-v.d/   : {
+    /elk-vg-v.d.*/   : {
       $elk = 'Proxy'
     }
     $vagrant_cluster   : {
