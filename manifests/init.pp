@@ -13,6 +13,12 @@ class elk ($elk = $::elk::params::elk, $cluster_name = $::elk::params::cluster_n
     'Kibana'   : {
       include elk::kibana
     }
+    'MQ'      : {
+      include elk::rabbitmq
+    }
+    'Proxy'      : {
+      include elk::haproxy
+    }
     'ELK'      : {
       include elk::full_stack
     }
