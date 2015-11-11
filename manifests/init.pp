@@ -29,7 +29,7 @@ class elk ($elk = $::elk::params::elk, $cluster_name = $::elk::params::cluster_n
       include elk::kibana
     }
     default    : {
-      notify { "elk_role2_default": message => 'Your ELK host has no $::role2' }
+      notify { "elk_role2_default": message => 'Your ELK host has not been defined in elk::params' }
     }
   }
 }
