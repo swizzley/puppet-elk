@@ -74,10 +74,33 @@ class elk::params {
     }
   }
   
+  # Elasticsearch
   $es_master = values_at($es_cluster, 0)
   $es_front = suffix($es_master, $::domain)
   $c10k = values_at(reverse($es_cluster), 0)
   $es_url = "http://${es_master}:9200"
+  
+  # Logstash
+  $patterns = []
+
+  # Logstash-Forwarder 
+  $paths = []
+  $dead_time = ''
+  $fields = {
+  }
+  
+  # RabbitMQ 
+  if $($use_hiera_for_secret_data == true){
+    $rmq_user = hiera('rmq_user')
+    $rmq_admin = hiera('rmq_admin')
+    $rmq_pass = hiera('rmq_pass')
+    $rmq_key = hiera('rmq_key')
+  }else {
+    $rmq_user = undef
+    $rmq_admin = undef
+    $rmq_pass = undef
+    $rmq_key = undef
+  }
   
   if $secure_install {
     $kibana_url = undef
@@ -94,26 +117,5 @@ class elk::params {
       $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip'
     }
   }
-
-  # Logstash Patterns
-  $patterns = []
-
-  # Logstash-Forwarder 
-  $paths = []
-  $dead_time = ''
-  $fields = {
-  }
-
-  # RabbitMQ 
-  if $($use_hiera_for_secret_data == true){
-    $rmq_user = hiera('rmq_user')
-    $rmq_admin = hiera('rmq_admin')
-    $rmq_pass = hiera('rmq_pass')
-    $rmq_key = hiera('rmq_key')
-  }else {
-    $rmq_user = undef
-    $rmq_admin = undef
-    $rmq_pass = undef
-    $rmq_key = undef
-  }
+  
 }
