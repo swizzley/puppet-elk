@@ -3,6 +3,7 @@
 class elk::params {
   # Options
   $secure_install = false
+  $use_hiera_for_secret_data = false
   $elasticsearch_version = '1.7.1'
   $data_dir = '/var/lib/elasticsearch/data'
   
@@ -104,8 +105,15 @@ class elk::params {
   }
 
   # RabbitMQ 
-  $rmq_user = hiera('rmq_user')
-  $rmq_admin = hiera('rmq_admin')
-  $rmq_pass = hiera('rmq_pass')
-  $rmq_key = hiera('rmq_key')
+  if $($use_hiera_for_secret_data == true){
+    $rmq_user = hiera('rmq_user')
+    $rmq_admin = hiera('rmq_admin')
+    $rmq_pass = hiera('rmq_pass')
+    $rmq_key = hiera('rmq_key')
+  }else {
+    $rmq_user = undef
+    $rmq_admin = undef
+    $rmq_pass = undef
+    $rmq_key = undef
+  }
 }
