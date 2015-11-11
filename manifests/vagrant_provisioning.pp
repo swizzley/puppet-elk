@@ -10,7 +10,7 @@ $pubkey_hiera = ''
 #Git Deploy Key
 $git_host = ''
 $git_username = ''
-$vagrant_start = 'exec{'initial puppet run': path => '/usr/bin', command => 'puppet agent -t'}'
+$vagrant_start = 'exec{'initial puppet run': path => '/usr/bin', command => 'puppet apply -t /etc/puppet/manifests/site.pp'}'
 
   file{'/etc/puppet/manifests/site.pp': 
     ensure => present, 
