@@ -21,12 +21,12 @@ $vagrant_home = '/root'
   file{"${vagrant_home}/provision": 
     ensure => directory, 
     mode => '0644', 
-    content => template(elk/swizzley88-elk.pp.erb),
+    content => template('elk/swizzley88-elk.pp.erb'),
   }->
   file{"${vagrant_home}/provision/swizzley88-elk.pp": 
     ensure => present, 
     mode => '0644', 
-    content => template(elk/swizzley88-elk.pp.erb),
+    content => template('elk/swizzley88-elk.pp.erb'),
   }->
   file{"${vagrant_home}/Vagrantfile": 
     ensure => present, 
