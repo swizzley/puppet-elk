@@ -17,7 +17,8 @@ class elk::params {
                 $cluster_name = 'vagrant'
                 $es_cluster = grep($vagrant_cluster, 'es')
                 $es_unicast_ip = '10.0.2.19, 10.0.2.20, 10.0.2.21'
-                $pvt_key = 'puppet:///elk/logstash-forwarder-vagrant.key'
+                $pvt_key = 'puppet:///modules/elk/logstash-forwarder-vagrant.key'
+                $cert = 'puppet:///modules/elk/logstash-forwarder-vagrant.crt'
                 $log_cluster = grep($vagrant_cluster, 'log')
                 $log_cluster_ips = ['10.0.2.15', '10.0.2.16']
                 $kib_cluster = grep($vagrant_cluster, 'kib')
@@ -97,7 +98,6 @@ class elk::params {
   $patterns = []
 
   # Logstash-Forwarder 
-  $cert = 'puppet:///modules/elk/logstash-forwarder.crt'
   $paths = []
   $dead_time = ''
   $fields = {
