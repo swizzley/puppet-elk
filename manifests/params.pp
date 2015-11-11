@@ -6,15 +6,10 @@ class elk::params {
   $vagrant_cluster = ['elk-vg-v1d', 'log-vg-v1d', 'log-vg-v2d', 'kib-vg-v1d', 'kib-vg-v2d', 'elkq-vg-v1d', 'elkq-vg-v2d', 
       'es-vg-v1d', 'es-vg-v2d', 'es-vg-v3d' ]
       
-  case $::fqdn {
-    /.*-vg-.*/   : { $location = 'VG' } # Vagrant Test Environment
-    default      : { $location = undef }
-  }    
-
   # Elasticsearch Vars
   $elasticsearch_version = '1.7.1'
-    case $location {
-    'VG'   : { 
+    case $fqdn {
+    /.*-vg-.*/   : { 
                 $cluster_name = 'vagrant'
                 $es_cluster = grep($vagrant_cluster, 'es')
                 $es_unicast_ip = '10.0.2.19, 10.0.2.20, 10.0.2.21'
