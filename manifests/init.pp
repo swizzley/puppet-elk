@@ -14,19 +14,7 @@ class elk ($elk = $::elk::params::elk, $cluster_name = $::elk::params::cluster_n
       include elk::kibana
     }
     'ELK'      : {
-      elk::elasticsearch { $cluster_name:
-        role    => $elk,
-        master  => true,
-        data    => true,
-        cors    => false,
-        parity  => 0,
-        unicast => $::ipaddress,
-        path    => '/usr/share/elasticsearch/data',
-      }
-      include elk::haproxy
-      include elk::rabbitmq
-      include elk::logstash
-      include elk::kibana
+      include elk::full_stack
     }
     default    : {
       notify { "elk_role2_default": message => 'Your ELK host has not been defined in elk::params' }
