@@ -57,16 +57,16 @@ class elk::params {
     /^log-vg-v[1-9]d$/  : {
         $elk = 'Logstash'
       }
-    $kib_cluster   : {
+    /^kib-vg-v[1-9]d$/   : {
         $elk = 'Kibana'
       }
-    $logstash_mq  : {
+    /^elkq-vg-v[1-9]d$/ : {
         $elk = 'MQ'
       }
     'elk-vg-v1d'   : {
         $elk = 'Proxy'
       }
-    $fullstack   : {
+    'elks-vg-v0d'   : {
         $elk = 'ELK'
       }
     default : {
