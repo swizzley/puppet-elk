@@ -63,7 +63,7 @@ class elk::params {
     $logstash_mq  : {
         $elk = 'MQ'
       }
-    /elk-vg-v.d.*/   : {
+    /^elk-vg-v[1-9]d$/   : {
         $elk = 'Proxy'
       }
     $fullstack   : {
