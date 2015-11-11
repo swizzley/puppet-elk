@@ -3,6 +3,7 @@
 # This module deploys the ELK stack in the best way
 #
 class elk ($elk = $::elk::params::elk, $cluster_name = $::elk::params::cluster_name, $es_master = $::elk::params::es_master, $c10k = $::elk::params::c10k, $datadir = $::elk::params::datadir, $es_unicast_ip = $::elk::params::es_unicast_ip) inherits ::elk::params {
+  validate_string($es_unicast_ip)
   case $elk {
     'Elastic'  : {
       case $::hostname {
