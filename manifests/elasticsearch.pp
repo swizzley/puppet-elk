@@ -23,7 +23,7 @@ define elk::elasticsearch (
   require elk::java
   include ::elasticsearch
 
-  if ($role == 'elastic') {
+  if ($::elk::elk == 'Elastic') {
     elasticsearch::instance { $name:
       config => {
         'cluster.name'             => $name,
@@ -51,28 +51,12 @@ define elk::elasticsearch (
       }
     }
   } else {
-    elasticsearch::instance { "ELK": }
-  }
-
-  file { '/app/platform/elasticsearch/bin/plugin':
-    ensure => link,
-    target => '/usr/share/elasticsearch/bin/plugin',
-  }
-
-  file { '/app/platform/elasticsearch/bin/elasticsearch':
-    ensure => link,
-    target => '/usr/share/elasticsearch/bin/elasticsearch',
-  }
-
-  file { '/app/platform/elasticsearch/plugins/HQ':
-    ensure => link,
-    target => '/usr/share/elasticsearch/plugins/HQ',
+    elasticsearch::instance { "Elasticsearch": }
   }
 
   elasticsearch::plugin { 'HQ':
     url       => $url_elasticsearch_plugin_hq,
-    instances => "${org}",
-    require   => [File['/app/platform/elasticsearch/bin/plugin'], File['/app/platform/elasticsearch/plugins/HQ'],]
+    instances => "Elasticsearch",
   }
 
 }
