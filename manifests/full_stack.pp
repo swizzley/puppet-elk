@@ -1,6 +1,6 @@
 # class elk::full_stack
 class elk::full_stack {
-  elk::elasticsearch { 'ELK':
+  elk::elasticsearch { 'Elasticsearch':
     master  => true,
     data    => true,
     cors    => false,
