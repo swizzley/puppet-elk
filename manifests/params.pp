@@ -13,7 +13,7 @@ class elk::params {
       'es-vg-v1d', 'es-vg-v2d', 'es-vg-v3d' ]
       
   # Data
-    case $fqdn {
+    case $::hostname {
     /.*-vg-v[1-9]d$/   : { 
                 $cluster_name = 'vagrant'
                 $es_cluster = grep($vagrant_cluster, 'es')
@@ -63,7 +63,7 @@ class elk::params {
     $logstash_mq  : {
         $elk = 'MQ'
       }
-    /^elk-vg-v[1-9]d$/   : {
+    'elk-vg-v1d'   : {
         $elk = 'Proxy'
       }
     $fullstack   : {
@@ -81,7 +81,7 @@ class elk::params {
   $es_url = "http://${es_master}:9200"
   
   # Logstash
-  $patterns = []
+  #$patterns = []
 
   # Logstash-Forwarder 
   $paths = []
@@ -90,7 +90,7 @@ class elk::params {
   }
   
   # RabbitMQ 
-  if $($use_hiera_for_secret_data == true){
+  if ($use_hiera_for_secret_data == true){
     $rmq_user = hiera('rmq_user')
     $rmq_admin = hiera('rmq_admin')
     $rmq_pass = hiera('rmq_pass')
