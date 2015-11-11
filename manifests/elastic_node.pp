@@ -1,5 +1,5 @@
 # class elk::elastic_node
-class elk::elastic ($es_cluster = $::scout::elk::es_cluster, $es_unicast_ip = $::scout::elk::es_unicast_ip, $es_master = $::elk::params::es_master, $c10k = $::elk::params::c10k, $data_dir = $::elk::params::data_dir) inherits ::elk::params {
+class elk::elastic ($es_cluster = $::scout::elk::es_cluster, $es_unicast_ip = $::scout::elk::es_unicast_ip, $es_master = $::elk::params::es_master, $c10k = $::elk::params::c10k, $data_dir = $::elk::params::data_dir, $url_elasticsearch_plugin_hq = $::elk::params::url_elasticsearch_plugin_hq) inherits ::elk::params {
   validate_string($es_unicast_ip)
   validate_array($es_cluster)
   validate_absolute_path($data_dir)
@@ -13,6 +13,7 @@ class elk::elastic ($es_cluster = $::scout::elk::es_cluster, $es_unicast_ip = $:
         parity  => 0,
         unicast => $es_unicast_ip,
         path    => $data_dir,
+        url_elasticsearch_plugin_hq => $url_elasticsearch_plugin_hq,
       }
     }
     "${c10k}"   : {
@@ -23,6 +24,7 @@ class elk::elastic ($es_cluster = $::scout::elk::es_cluster, $es_unicast_ip = $:
         parity  => 0,
         unicast => $es_unicast_ip,
         path    => $data_dir,
+        url_elasticsearch_plugin_hq => $url_elasticsearch_plugin_hq,
       }
     }
     default     : {
@@ -33,6 +35,7 @@ class elk::elastic ($es_cluster = $::scout::elk::es_cluster, $es_unicast_ip = $:
         parity  => 0,
         unicast => $es_unicast_ip,
         path    => $data_dir,
+        url_elasticsearch_plugin_hq => $url_elasticsearch_plugin_hq,
       }
     }
   }
