@@ -73,17 +73,27 @@ class elk::params {
   $c10k = values_at(reverse($es_cluster), 0)
   $es_url = "http://${es_master}:9200"
   $data_dir = '/var/lib/elasticsearch/data'
-  if ($elasticsearch_version == '1.7.1'){
-    $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v1.0.0.zip'
+  if $secure_install {
+    $kibana_url = undef
+    if ($elasticsearch_version == '1.7.1'){
+      $url_elasticsearch_plugin_hq = undef
+    }else {
+      $url_elasticsearch_plugin_hq = undef
+    }
   }else {
-    $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip'
+    $kibana_url = 'https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz'
+    if ($elasticsearch_version == '1.7.1'){
+      $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v1.0.0.zip'
+    }else {
+      $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip'
+    }
   }
 
   # Logstash Vars
   $patterns = []
 
   # Kibana Vars
-  $kibana_url = 'https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz'
+  
 
   # Logstash-Forwarder Vars
   $cert = 'puppet:///modules/elk/logstash-forwarder.crt'
