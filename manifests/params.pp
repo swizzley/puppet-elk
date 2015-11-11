@@ -96,10 +96,10 @@ class elk::params {
     $rmq_pass = hiera('rmq_pass')
     $rmq_key = hiera('rmq_key')
   }else {
-    $rmq_user = undef
-    $rmq_admin = undef
-    $rmq_pass = undef
-    $rmq_key = undef
+    $rmq_user = 'rabbit'
+    $rmq_admin = 'admin'
+    $rmq_pass = 'password'
+    $rmq_key = 'secret'
   }
   
   if $secure_install {
