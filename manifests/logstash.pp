@@ -1,62 +1,55 @@
-# class elk::logstash
+# class ::elk::logstash
 #
 # # # # Filters can go in any order, so long as they are NOT FIRST OR LAST # # # #
 # This filter is for processing SYSLOG files
 # lumberjack-in should always have the LOWEST order number
 # lumberjack-out should always have the HIGHEST order number
 class elk::logstash (
-  $es          = $::elk::params::es_front,
-  $es_cluster  = $::elk::params::es_cluster,
-  $logstash_mq = $::elk::params::logstash_mq,
-  $rmq_user    = $::elk::params::elk_rmq_user,
-  $rmq_pass    = $::elk::params::elk_rmq_pass,
-  $rmq_admin   = $::elk::params::elk_rmq_admin,
-  $rmq_key     = $::elk::params::elk_rmq_key,) inherits ::elk::params {
+  $rmq_user      = $scout::elk::rmq_user,
+  $rmq_pass      = $scout::elk::rmq_pass,
+  $rmq_admin     = $scout::elk::rmq_admin,
+  $rmq_key       = $scout::elk::rmq_key,) inherits ::elk::params {
   # Prerequisites
-  include elk::java
-  require elk::java
+  include ::elk::java
+  require ::elk::java
   include ::logstash
+  include ::elk::logstash_patterns
 
-  if ($::role2 == 'ELK') {
-    if ($::profile == 'production') {
-      # This is for the MQ Buffer hosts only
-      logstash::configfile { 'lumberjack-MQ':
-        order   => 01,
-        content => template('elk/elk/logstash-conf-rabbitmq.erb')
-      }
-    } else {
-      logstash::configfile { 'lumberjack-MQ':
-        order   => 01,
-        content => template('elk/elk/logstash-conf-fullstack.erb')
-      }
-    }
-  } else {
-    logstash::configfile { 'rabbitmq-in':
+  if ($::elk::elk == 'Logstash') {
+    logstash::configfile { 'fullstack-begin':
       order   => 01,
-      content => template('elk/elk/logstash-conf-first.erb')
+      content => template('scout/elk/logstash-conf-fullstack-first.erb')
     }
 
-    logstash::configfile { 'filter-syslog':
-      order   => 03,
-      content => template('elk/elk/logstash-filter-syslog.erb')
+    logstash::configfile { 'fullstack-end':
+      order   => 02,
+      content => template('scout/elk/logstash-conf-fullstack-last.erb')
     }
 
-    logstash::configfile { 'elasticsearch-out':
-      order   => 04,
-      content => template('elk/elk/logstash-conf-last.erb')
-    }
     # cluster setup
-    file_line { "elastic_cluster_defaults":
-      line => 'LS_JAVA_OPTS="-Djava.io.tmpdir=${LS_HOME} -Des.config=/etc/logstash/elasticsearch.yaml"',
-      path => '/etc/sysconfig/logstash'
-    } ~> Service['logstash']
-
     file { '/etc/logstash/elasticsearch.yaml':
       owner   => 'root',
       group   => 'root',
       mode    => '0664',
       content => template('elk/logstash-elasticsearch-yaml.erb')
     } ~> Service['logstash']
+
+  } else {
+    # This is for full-stack node to do testing in staging
+    logstash::configfile { 'fullstack-begin':
+      order   => 01,
+      content => template('scout/elk/logstash-conf-fullstack-first.erb')
+    }
+
+    logstash::configfile { 'filter-syslog':
+      order   => 02,
+      content => template('scout/elk/filters/syslog.erb')
+    }
+
+    logstash::configfile { 'fullstack-end':
+      order   => 03,
+      content => template('scout/elk/logstash-conf-fullstack-last.erb')
+    }
   }
 
 }
