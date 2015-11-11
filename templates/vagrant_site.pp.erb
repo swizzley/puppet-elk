@@ -1,6 +1,7 @@
 
 #https://github.com/swizzley/puppet-elk/blob/master/templates/vagrant_site.erb
 #
+<% if @secure_install %>
 # Configure the values for your forks
 $deploy_puppet_private = '<%= @pvtkey_puppet %>'
 $deploy_puppet_public = '<%= @pvbkey_puppet %>'
@@ -130,5 +131,8 @@ file { '/etc/puppet/puppet.conf':
   
 '
 }->
+<% else %>
+exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
+<% end %>
 $vagrant_start
 
