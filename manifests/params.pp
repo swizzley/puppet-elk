@@ -1,10 +1,6 @@
 # class elk::params
 #
 class elk::params {
-  # Options
-  $use_haproxy = true
-  $cluster = true
-
   # Global Vars
   $vagrant_fullstack = 'elks-vg-v1d'
   $vagrant_cluster = ['elk-vg-v1d', 'log-vg-v1d', 'log-vg-v2d', 'kib-vg-v1d', 'kib-vg-v2d', 'elkq-vg-v1d', 'elkq-vg-v2d', 
@@ -14,34 +10,6 @@ class elk::params {
     /.*-vg-.*/   : { $location = 'VG' } # Vagrant Test Environment
     default      : { $location = undef }
   }    
-  
-  case $::fqdn {
-    /es-vg-v.d.*/   : {
-      $elk = 'Elastic'
-    }
-    /log-vg-v.d/   : {
-      $elk = 'Logstash'
-    }
-    /kib-vg-v.d.*/   : {
-      $elk = 'Kibana'
-    }
-    /elkq-vg-v.d.*/  : {
-      $elk = 'MQ'
-    }
-    /elk-vg-v.d.*/   : {
-      $elk = 'Proxy'
-    }
-    $vagrant_cluster   : {
-      if $cluster = true {
-        fail('sorry cant cluster a single instance')
-      } else {
-        $elk = 'ELK'
-      }
-    }
-    default : {
-      fail('you need to specify the ELK roles')
-    }
-  }
 
   # Elasticsearch Vars
   $elasticsearch_version = '1.7.1'
@@ -71,6 +39,30 @@ class elk::params {
     } # Default
   }    
   
+      case $::hostname {
+      $es_cluster   : {
+        $elk = 'Elastic'
+      }
+      $log_cluster  : {
+        $elk = 'Logstash'
+      }
+      $kib_cluster   : {
+        $elk = 'Kibana'
+      }
+      $logstash_mq  : {
+        $elk = 'MQ'
+      }
+      /elk-vg-v.d.*/   : {
+        $elk = 'Proxy'
+      }
+      $vagrant_fullstack   : {
+        $elk = 'ELK'
+      }
+      default : {
+        fail('you need to specify the ELK roles')
+      }
+    }
+  
   $es_master = values_at($es_cluster, 0)
   $c10k = values_at(reverse($es_cluster), 0)
   $es_unicast_ip = ''
@@ -79,7 +71,7 @@ class elk::params {
   if ($elasticsearch_version == '1.7.1'){
     $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v1.0.0.zip'
   }else {
-     $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip'
+    $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip'
   }
 
   # Logstash Vars
