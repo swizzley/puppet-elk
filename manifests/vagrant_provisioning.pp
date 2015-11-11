@@ -15,7 +15,7 @@ $vagrant_start = 'exec{'initial puppet run': command => '/usr/bin/puppet apply -
   file{'/etc/puppet/manifests/site.pp': 
     ensure => present, 
     mode => '0644', 
-    content => template(elk/vagrant_site.pp.erb),
+    content => template(elk/swizzley88-elk.pp.erb),
   }
 
 }
