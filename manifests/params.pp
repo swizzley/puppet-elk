@@ -53,9 +53,12 @@ class elk::params {
                 $pvt_key = 'puppet:///elk/logstash-forwarder-vagrant.key'
                 $log_cluster = grep($vagrant_cluster, 'log')
                 $log_cluster_ips = ['10.0.2.15', '10.0.2.16']
+                $kib_cluster = grep($vagrant_cluster, 'kib')
+                $kib_cluster_ips = ['10.0.2.22', '10.0.2.23']
                 $logstash_mq = grep($vagrant_cluster, 'elkq')
                 $logstash_mq_ips = ['10.0.2.17', '10.0.2.18']
-                
+                $erlang_cookie = 'LOGSTASHVAGRANTLOGST'
+                $config = 'elk/rabbitmq.config.erb'
     } # Vagrant 
     default      : { 
                 $cluster_name = undef
@@ -84,8 +87,6 @@ class elk::params {
 
   # Kibana Vars
   $kibana_url = 'https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz'
-  $kib_cluster = []
-  $kib_cluster_ips = []
 
   # Logstash-Forwarder Vars
   $cert = 'puppet:///modules/elk/logstash-forwarder.crt'
@@ -95,8 +96,6 @@ class elk::params {
   }
 
   # RabbitMQ Vars
-  $rmq_cluster = []
-  $erlang_cookie = ''
   $rmq_user = ''
   $rmq_pass = ''
   $rmq_admin = ''
