@@ -27,7 +27,7 @@ class elk::params {
                 $erlang_cookie = 'LOGSTASHVAGRANTLOGST'
                 $config = 'elk/rabbitmq.config.erb'
     } # Vagrant Cluster
-        /.*-vg-v0d$/   : { 
+   /.*-vg-v0d$/   : { 
                 $cluster_name = 'vagrant'
                 $logstash_mq = $::fqdn
                 $es_cluster = ['localhost']
