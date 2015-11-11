@@ -2,14 +2,14 @@
 #
 class elk::params {
   # Global Vars
-  $vagrant_fullstack = 'elks-vg-v1d'
+  $vagrant_fullstack = 'elks-vg-v0d'
   $vagrant_cluster = ['elk-vg-v1d', 'log-vg-v1d', 'log-vg-v2d', 'kib-vg-v1d', 'kib-vg-v2d', 'elkq-vg-v1d', 'elkq-vg-v2d', 
       'es-vg-v1d', 'es-vg-v2d', 'es-vg-v3d' ]
       
   # Elasticsearch Vars
   $elasticsearch_version = '1.7.1'
     case $fqdn {
-    /.*-vg-.*/   : { 
+    /.*-vg-v[1-9]d$/   : { 
                 $cluster_name = 'vagrant'
                 $es_cluster = grep($vagrant_cluster, 'es')
                 $es_unicast_ip = '10.0.2.19, 10.0.2.20, 10.0.2.21'
@@ -22,7 +22,21 @@ class elk::params {
                 $logstash_mq_ips = ['10.0.2.17', '10.0.2.18']
                 $erlang_cookie = 'LOGSTASHVAGRANTLOGST'
                 $config = 'elk/rabbitmq.config.erb'
-    } # Vagrant 
+    } # Vagrant Cluster
+        /.*-vg-v0d$/   : { 
+                $cluster_name = 'vagrant'
+                $es_cluster = grep($vagrant_cluster, 'es')
+                $es_unicast_ip = '10.0.2.19, 10.0.2.20, 10.0.2.21'
+                $pvt_key = 'puppet:///elk/logstash-forwarder-vagrant.key'
+                $log_cluster = grep($vagrant_cluster, 'log')
+                $log_cluster_ips = ['10.0.2.15', '10.0.2.16']
+                $kib_cluster = grep($vagrant_cluster, 'kib')
+                $kib_cluster_ips = ['10.0.2.22', '10.0.2.23']
+                $logstash_mq = grep($vagrant_cluster, 'elkq')
+                $logstash_mq_ips = ['10.0.2.17', '10.0.2.18']
+                $erlang_cookie = 'LOGSTASHVAGRANTLOGST'
+                $config = 'elk/rabbitmq.config.erb'
+    } #Vagrant Stand-Alone
     default      : { 
                 $cluster_name = undef
                 $es_cluster = undef
@@ -34,29 +48,29 @@ class elk::params {
     } # Default
   }    
   
-      case $::hostname {
-      $es_cluster   : {
+  case $::hostname {
+    $es_cluster   : {
         $elk = 'Elastic'
       }
-      $log_cluster  : {
+    $log_cluster  : {
         $elk = 'Logstash'
       }
-      $kib_cluster   : {
+    $kib_cluster   : {
         $elk = 'Kibana'
       }
-      $logstash_mq  : {
+    $logstash_mq  : {
         $elk = 'MQ'
       }
-      /elk-vg-v.d.*/   : {
+    /elk-vg-v.d.*/   : {
         $elk = 'Proxy'
       }
-      $vagrant_fullstack   : {
+    $vagrant_fullstack   : {
         $elk = 'ELK'
       }
-      default : {
+    default : {
         fail('you need to specify the ELK roles')
-      }
     }
+  }
   
   $es_master = values_at($es_cluster, 0)
   $c10k = values_at(reverse($es_cluster), 0)
