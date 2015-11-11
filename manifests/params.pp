@@ -25,17 +25,12 @@ class elk::params {
     } # Vagrant Cluster
         /.*-vg-v0d$/   : { 
                 $cluster_name = 'vagrant'
-                $es_cluster = grep($vagrant_cluster, 'es')
-                $es_unicast_ip = '10.0.2.19, 10.0.2.20, 10.0.2.21'
-                $pvt_key = 'puppet:///elk/logstash-forwarder-vagrant.key'
-                $log_cluster = grep($vagrant_cluster, 'log')
-                $log_cluster_ips = ['10.0.2.15', '10.0.2.16']
-                $kib_cluster = grep($vagrant_cluster, 'kib')
-                $kib_cluster_ips = ['10.0.2.22', '10.0.2.23']
-                $logstash_mq = grep($vagrant_cluster, 'elkq')
-                $logstash_mq_ips = ['10.0.2.17', '10.0.2.18']
-                $erlang_cookie = 'LOGSTASHVAGRANTLOGST'
-                $config = 'elk/rabbitmq.config.erb'
+                $logstash_mq = $::fqdn
+                $es_cluster = ['localhost']
+                $log_cluster = ['localhost']
+                $logstash_mq_ips = ['127.0.0.1']
+                $kib_cluster = ['localhost']
+                $kib_cluster_ips = ['127.0.0.1']
     } #Vagrant Stand-Alone
     default      : { 
                 $cluster_name = undef
