@@ -104,10 +104,8 @@ class elk::params {
   }
 
   # RabbitMQ 
-  $rmq_user = ''
-  $rmq_pass = ''
-  $rmq_admin = ''
-  $rmq_key = ''
-  $rmq_master = reverse(chomp(chomp(reverse(chomp(chomp(values_at($rmq_cluster, 0)))))))
-
+  $rmq_user = hiera('rmq_user')
+  $rmq_admin = hiera('rmq_admin')
+  $rmq_pass = hiera('rmq_pass')
+  $rmq_key = hiera('rmq_key')
 }
