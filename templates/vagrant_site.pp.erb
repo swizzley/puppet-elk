@@ -7,6 +7,7 @@ $deploy_puppet_public = '<%= @pvbkey_puppet %>'
 $deploy_hiera_private = '<%= @pvtkey_hiera %>'
 $deploy_hiera_public = '<%= @pubkey_hiera %>'
 #Git Deploy Key
+$git_url = '<%= @git_host %>'
 $deploy_pvtkey_git_ID = '<%= @git_username %>'
 $vagrant_start = <%= @vagrant_start =%>
 
@@ -16,11 +17,7 @@ $deploy_pvtkey_git_ID == '') {
   fail('use ssh-keygen from cli to create keys and then goto your forks in github and paste the public keys into the deploy keys tab of each relative fork and also paste the public and private keys in as variables in your vagrant provisioning fork, along with your NTid... Lines 2-7 of this file.'
   )
 }
-# Roles a.k.a. Purpose
-case $::fqdn {
-  <@= @Vagrant_hosts %> : { $role = 'elk' }
-  default             : { nofitfy{'':message=>"see https://github.com/swizzley/puppet-elk/blob/master/manifests/params.pp for help"} }
-}
+
 file { '/root/.ssh':
   ensure => 'directory',
   mode   => '0750',
@@ -77,46 +74,6 @@ file { '/root/.ssh/known_hosts':
   owner   => 'root',
   group   => 'root',
   content => ''
-}
-
-# Point yum to Atlas
-file { [
-  '/etc/yum.repos.d/CentOS-Base.repo',
-  '/etc/yum.repos.d/CentOS-Debuginfo.repo',
-  '/etc/yum.repos.d/CentOS-fasttrack.repo',
-  '/etc/yum.repos.d/CentOS-Media.repo',
-  '/etc/yum.repos.d/CentOS-Vault.repo',
-  '/etc/yum.repos.d/epel.repo',
-  '/etc/yum.repos.d/epel-testing.repo',
-  '/etc/yum.repos.d/puppetlabs.repo']:
-  ensure => absent
-} -> exec { 'clean':
-  command => '/usr/bin/yum clean all',
-  unless  => '/usr/bin/test -f /etc/yum.repos.d/CENTOS-UPDATE.repo',
-} ->
-yumrepo { 'EPEL':
-  descr    => 'Extra Packages for Enterprise Linux 6',
-  baseurl  => '<%= @vagrant_yum_url_epel %>',
-  gpgcheck => '0',
-  enabled  => '1',
-} ->
-yumrepo { 'PUPPET':
-  descr    => 'Extra Packages for Enterprise Linux 6',
-  baseurl  => '<%= @vagrant_yum_url_puppet %>',
-  gpgcheck => '0',
-  enabled  => '1'
-} ->
-yumrepo { 'CENTOS-BASE':
-  descr    => 'Extra Packages for Enterprise Linux 6',
-  baseurl  => '<%= @vagrant_yum_url_base %>',
-  gpgcheck => '0',
-  enabled  => '1'
-} ->
-yumrepo { 'CENTOS-UPDATE':
-  descr    => 'Extra Packages for Enterprise Linux 6',
-  baseurl  => '<%= @vagrant_yum_url_updates %>',
-  gpgcheck => '0',
-  enabled  => '1'
 }
 
 # Setup the code on the node
