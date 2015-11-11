@@ -1,10 +1,8 @@
 # class elk::elastic_node
-class elk::elastic ($es_cluster = $::scout::elk::es_cluster, $es_unicast_ip = $::scout::elk::es_unicast_ip, $es_master = $::elk::params::es_master, $c10k = $::elk::params::c10k, $datadir = $::elk::params::datadir) inherits ::elk::params {
+class elk::elastic ($es_cluster = $::scout::elk::es_cluster, $es_unicast_ip = $::scout::elk::es_unicast_ip, $es_master = $::elk::params::es_master, $c10k = $::elk::params::c10k, $data_dir = $::elk::params::data_dir) inherits ::elk::params {
   validate_string($es_unicast_ip)
-  # Variables
-  $master = values_at($es_cluster, 0)
-  $c10k = values_at(reverse($es_cluster), 0)
-  $data_dir = '/app/platform/elasticsearch/data'
+  validate_array($es_cluster)
+  validate_absolute_path($data_dir)
 
   case $::hostname {
     "${master}" : {
