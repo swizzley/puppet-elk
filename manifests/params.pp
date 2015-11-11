@@ -50,29 +50,37 @@ class elk::params {
                 $cluster_name = 'vagrant'
                 $es_cluster = grep($vagrant_cluster, 'es')
                 $es_unicast_ip = '10.0.2.19, 10.0.2.20, 10.0.2.21'
+                $pvt_key = 'puppet:///elk/logstash-forwarder-vagrant.key'
+                $log_cluster = grep($vagrant_cluster, 'log')
+                $log_cluster_ips = ['10.0.2.15', '10.0.2.16']
+                $logstash_mq = grep($vagrant_cluster, 'elkq')
+                $logstash_mq_ips = ['10.0.2.17', '10.0.2.18']
+                
     } # Vagrant 
     default      : { 
                 $cluster_name = undef
                 $es_cluster = undef
                 $es_unicast_ip = undef
+                $pvt_key = undef
+                $patterns = undef
+                $log_cluster = undef
+                $logstash_mq = undef
     } # Default
   }    
   
   $es_master = values_at($es_cluster, 0)
   $c10k = values_at(reverse($es_cluster), 0)
   $es_unicast_ip = ''
-  $es_url = "http://${es_master}"
+  $es_url = "http://${es_master}:9200"
   $data_dir = '/var/lib/elasticsearch/data'
   if ($elasticsearch_version == '1.7.1'){
     $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v1.0.0.zip'
   }else {
      $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip'
   }
+
   # Logstash Vars
-  $pvt_key = 'puppet:///private/logstash-forwarder.key'
   $patterns = []
-  $log_cluster = []
-  $logstash_mq = ''
 
   # Kibana Vars
   $kibana_url = 'https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz'
