@@ -1,14 +1,17 @@
 # class elk::params
 #
 class elk::params {
-  # Global Vars
+  # Options
   $secure_install = false
+  $elasticsearch_version = '1.7.1'
+  $data_dir = '/var/lib/elasticsearch/data'
+  
+  # Nodes
   $vagrant_fullstack = 'elks-vg-v0d'
   $vagrant_cluster = ['elk-vg-v1d', 'log-vg-v1d', 'log-vg-v2d', 'kib-vg-v1d', 'kib-vg-v2d', 'elkq-vg-v1d', 'elkq-vg-v2d', 
       'es-vg-v1d', 'es-vg-v2d', 'es-vg-v3d' ]
       
-  # Elasticsearch Vars
-  $elasticsearch_version = '1.7.1'
+  # Data
     case $fqdn {
     /.*-vg-v[1-9]d$/   : { 
                 $cluster_name = 'vagrant'
@@ -32,6 +35,7 @@ class elk::params {
                 $logstash_mq_ips = ['127.0.0.1']
                 $kib_cluster = ['localhost']
                 $kib_cluster_ips = ['127.0.0.1']
+                $full_stack = $vagrant_fullstack
     } #Vagrant Stand-Alone
     default      : { 
                 $cluster_name = undef
@@ -60,7 +64,7 @@ class elk::params {
     /elk-vg-v.d.*/   : {
         $elk = 'Proxy'
       }
-    $vagrant_fullstack   : {
+    $fullstack   : {
         $elk = 'ELK'
       }
     default : {
@@ -72,7 +76,7 @@ class elk::params {
   $es_front = suffix($es_master, $::domain)
   $c10k = values_at(reverse($es_cluster), 0)
   $es_url = "http://${es_master}:9200"
-  $data_dir = '/var/lib/elasticsearch/data'
+  
   if $secure_install {
     $kibana_url = undef
     if ($elasticsearch_version == '1.7.1'){
@@ -89,20 +93,17 @@ class elk::params {
     }
   }
 
-  # Logstash Vars
+  # Logstash Patterns
   $patterns = []
 
-  # Kibana Vars
-  
-
-  # Logstash-Forwarder Vars
+  # Logstash-Forwarder 
   $cert = 'puppet:///modules/elk/logstash-forwarder.crt'
   $paths = []
   $dead_time = ''
   $fields = {
   }
 
-  # RabbitMQ Vars
+  # RabbitMQ 
   $rmq_user = ''
   $rmq_pass = ''
   $rmq_admin = ''
