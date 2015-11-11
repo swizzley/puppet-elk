@@ -61,10 +61,13 @@ class elk::params {
   $es_master = values_at($es_cluster, 0)
   $c10k = values_at(reverse($es_cluster), 0)
   $es_unicast_ip = ''
-  $es_url = "http://${elasticsearch}"
-  $data_dir = ''
-  $url_elasticsearch_plugin_hq = ''
-
+  $es_url = "http://${es_master}"
+  $data_dir = '/var/lib/elasticsearch/data'
+  if ($elasticsearch_version == '1.7.1'){
+    $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v1.0.0.zip'
+  }else {
+     $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip'
+  }
   # Logstash Vars
   $pvt_key = 'puppet:///private/logstash-forwarder.key'
   $patterns = []
