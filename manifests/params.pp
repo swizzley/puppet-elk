@@ -6,25 +6,27 @@ class elk::params {
   $cluster = true
 
   # Global Vars
-  $foo = 'ALL'
+  $vagrant_fullstack = 'elks-vg-v1d'
+  $vagrant_cluster = ['elk-vg-v1d', 'log-vg-v1d', 'log-vg-v2d', 'kib-vg-v1d', 'kib-vg-v2d', 'elkq-vg-v1d', 'elkq-vg-v2d', 
+      'es-vg-v1d', 'es-vg-v2d', 'es-vg-v3d' ]
 
-  case $::foo {
-    'bar'   : {
+  case $::fqdn {
+    /es-vg-v.d/   : {
       $elk = 'Elastic'
     }
-    'BAR'   : {
+    /log-vg-v.d/   : {
       $elk = 'Logstash'
     }
-    'FOO'   : {
+    /kib-vg-v.d/   : {
       $elk = 'Kibana'
     }
-    'MOO'   : {
+    /elkq-vg-v.d/  : {
       $elk = 'MQ'
     }
-    'poo'   : {
+    /elk-vg-v.d/   : {
       $elk = 'Proxy'
     }
-    'ALL'   : {
+    $vagrant_cluster   : {
       if $cluster = true {
         fail('sorry cant cluster a single instance')
       } else {
