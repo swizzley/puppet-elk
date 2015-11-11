@@ -2,6 +2,7 @@
 #
 class elk::params {
   # Global Vars
+  $secure_install = false
   $vagrant_fullstack = 'elks-vg-v0d'
   $vagrant_cluster = ['elk-vg-v1d', 'log-vg-v1d', 'log-vg-v2d', 'kib-vg-v1d', 'kib-vg-v2d', 'elkq-vg-v1d', 'elkq-vg-v2d', 
       'es-vg-v1d', 'es-vg-v2d', 'es-vg-v3d' ]
