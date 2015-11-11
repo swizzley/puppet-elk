@@ -51,10 +51,10 @@ class elk::params {
   }    
   
   case $::hostname {
-    $es_cluster   : {
+    /^es-vg-v[1-9]d$/   : {
         $elk = 'Elastic'
       }
-    $log_cluster  : {
+    /^log-vg-v[1-9]d$/  : {
         $elk = 'Logstash'
       }
     $kib_cluster   : {
