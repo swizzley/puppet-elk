@@ -69,7 +69,6 @@ class elk::params {
   
   $es_master = values_at($es_cluster, 0)
   $c10k = values_at(reverse($es_cluster), 0)
-  $es_unicast_ip = ''
   $es_url = "http://${es_master}:9200"
   $data_dir = '/var/lib/elasticsearch/data'
   if ($elasticsearch_version == '1.7.1'){
