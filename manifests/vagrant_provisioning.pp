@@ -1,0 +1,21 @@
+#class elk::vagrant_provisioning
+class elk::vagrant_provisioning()inherits elk::params {
+
+# Configure the values for your forks
+$pvtkey_puppet = ''
+$pvbkey_puppet = ''
+$pvtkey_hiera = ''
+$pubkey_hiera = ''
+
+#Git Deploy Key
+$git_host = ''
+$git_username = ''
+$vagrant_start = 'exec{'initial puppet run': path => '/usr/bin', command => 'puppet agent -t'}'
+
+  file{'/etc/puppet/manifests/site.pp': 
+    ensure => present, 
+    mode => '0644', 
+    content => template(elk/vagrant_site.pp.erb),
+  }
+
+}
