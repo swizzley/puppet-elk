@@ -16,7 +16,7 @@ class elk::haproxy (
   $elastic_cluster = suffix($es_cluster, $::domain)
 
   # LB Kibana
-  if ($::profile == 'production') {
+  if ($::elk::elk != 'ELK') {
     haproxy::listen { 'kibana':
       mode      => 'tcp',
       ipaddress => $::ipaddress,
