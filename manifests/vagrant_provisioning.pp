@@ -1,5 +1,5 @@
 #class elk::vagrant_provisioning
-class elk::vagrant_provisioning()inherits elk::params {
+class elk::vagrant_provisioning($secure_install = $::elk::params::secure_install)inherits elk::params {
 
 # Configure the values for your forks
 $pvtkey_puppet = ''
