@@ -110,7 +110,8 @@ class elk::params {
       $url_elasticsearch_plugin_hq = undef
     }
   }else {
-    $kibana_url = 'https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz'
+    # FUll URL $kibana_url = 'https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz'
+    $kibana_url = 'https://download.elastic.co/kibana/kibana'
     if ($elasticsearch_version == '1.7.1'){
       $url_elasticsearch_plugin_hq = 'https://github.com/royrusso/elasticsearch-HQ/archive/v1.0.0.zip'
     }else {
