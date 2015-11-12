@@ -23,9 +23,9 @@ define elk::elasticsearch (
   require elk::java
   class { '::elasticsearch': 
     manage_repo => true,
-    repo_stage => true,
+   # repo_stage => true,
     repo_version => '1.0',
-    version => '1.7.1',
+   # version => '1.7.1',
   }
 
   if ($::elk::elk == 'Elastic') {
