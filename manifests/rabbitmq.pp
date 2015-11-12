@@ -13,10 +13,11 @@ class elk::rabbitmq (
   $erlang_cookie  = $::elk::params::erlang_cookie,) inherits ::elk::params {
   # Prerequisites
   class { '::rabbitmq': 
-    package_provider => 'yum',
-    cluster_nodes    => $cluster,
-    erlang_cookie    => $erlang_cookie,
-    config_cluster   => true,
+    package_provider         => 'yum',
+    cluster_nodes            => $cluster,
+    erlang_cookie            => $erlang_cookie,
+    config_cluster           => true,
+    wipe_db_on_cookie_change => true,
   }
 
   rabbitmq_vhost { 'logstash': ensure => present, }
