@@ -1,5 +1,8 @@
 # class elk::kibana
 class elk::kibana {
   include elk::java
-  include ::kibana
+  class { 'kibana': 
+    base_url => $::elk::kibana_url,
+    es_url => $::elk::es_url
+  }
 }
