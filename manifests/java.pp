@@ -5,6 +5,6 @@ class elk::java {
 
   class { '::java':
     distribution => 'jdk',
-    version      => '8'
+    version      => '7'
   }
 }
