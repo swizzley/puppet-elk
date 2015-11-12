@@ -61,29 +61,4 @@ class elk::rabbitmq (
     ensure           => present,
   }
   
-  file_line { 'sudo_sudoers.d':
-    ensure   => present,
-    path     => '/etc/sudoers',
-    line     => '#includedir /etc/sudoers.d',
-    match    => '^#includedir.*',
-    multiple => false,
-    replace  => false,
-  }
-  
-  file { '/etc/sudoers.d/rmq_root_no_tty':
-    ensure  => present,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0440',
-    content => "Defaults:root !requiretty \n",
-    require => File_line['sudo_sudoers.d'],
-  }
-  
-  exec { 'ha_queues':
-    path    => '/bin:/usr/bin:/usr/sbin',
-    command => 'sudo -u root /usr/sbin/rabbitmqctl set_policy -p logstash ha-all "^.*" \'{"ha-mode":"all", "ha-sync-mode":"automatic", "ha-promote-on-shutdown":"always"}\'',
-    unless  => 'sudo -u root /usr/sbin/rabbitmqctl list_policies -p logstash|grep ha|grep sync|grep auto|grep promote|grep always|grep -q all',
-    user    => 'root',
-    require => [Service['rabbitmq-server'], File['/etc/sudoers.d/rmq_root_no_tty']]
-  }
 }
