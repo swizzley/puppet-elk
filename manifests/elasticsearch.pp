@@ -21,7 +21,9 @@ define elk::elasticsearch (
 
   include elk::java
   require elk::java
-  include ::elasticsearch
+  class { '::elasticsearch': 
+    manage_repo => true,
+  }
 
   if ($::elk::elk == 'Elastic') {
     elasticsearch::instance { $name:
