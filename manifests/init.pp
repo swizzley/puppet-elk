@@ -2,7 +2,10 @@
 #
 # This module deploys the ELK stack in the best way
 #
-class elk ($elk = $::elk::params::elk) inherits ::elk::params {
+class elk ($elk = $::elk::params::elk,
+$es_url = $::elk::params::es_url,
+$kibana_url = $::elk::params::kibana_url,
+) inherits ::elk::params {
   case $elk {
     'Elastic'  : {
       include elk::elastic_node
