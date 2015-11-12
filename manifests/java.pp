@@ -7,8 +7,6 @@ class elk::java {
 #    distribution => 'oracle-jdk',
 #    version      => '8'
 #  }
-  class { '::java':
-    distribution => 'jre',
-    version      => '7'
-  }
+  package { ['java-1.6.0-openjdk', 'java-1.7.0-openjdk']: ensure => absent }
+  package { 'java-1.8.0-openjdk': ensure => installed }
 }
