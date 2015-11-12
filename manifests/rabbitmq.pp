@@ -5,8 +5,6 @@
 # Of Collection for all lumberjack nodes
 #
 class elk::rabbitmq (
-  $es          = $::elk::params::es_front,
-  $logstash_mq = $::elk::params::logstash_mq,
   $rmq_user    = $::elk::params::rmq_user,
   $rmq_pass    = $::elk::params::rmq_pass,
   $rmq_admin   = $::elk::params::rmq_admin,
