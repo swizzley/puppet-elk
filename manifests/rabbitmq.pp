@@ -14,8 +14,9 @@ class elk::rabbitmq (
   # Prerequisites
   class { '::rabbitmq': 
     package_provider => 'yum',
-    cluster       => $cluster,
-    erlang_cookie => $erlang_cookie,
+    cluster_nodes    => $cluster,
+    erlang_cookie    => $erlang_cookie,
+    config_cluster   => true,
   }
 
   rabbitmq_vhost { 'logstash': ensure => present, }
