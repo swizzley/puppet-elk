@@ -10,7 +10,7 @@ class elk::rabbitmq (
   $rmq_admin   = $::elk::params::rmq_admin,
   $rmq_key     = $::elk::params::rmq_key,) inherits ::elk::params {
   # Prerequisites
-  include ::rabbitmq
+  class { '::rabbitmq': package_provider => 'yum' }
 
   rabbitmq_vhost { 'logstash': ensure => present, }
 
