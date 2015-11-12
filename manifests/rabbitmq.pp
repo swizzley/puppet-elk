@@ -5,12 +5,18 @@
 # Of Collection for all lumberjack nodes
 #
 class elk::rabbitmq (
-  $rmq_user    = $::elk::params::rmq_user,
-  $rmq_pass    = $::elk::params::rmq_pass,
-  $rmq_admin   = $::elk::params::rmq_admin,
-  $rmq_key     = $::elk::params::rmq_key,) inherits ::elk::params {
+  $rmq_user       = $::elk::params::rmq_user,
+  $rmq_pass       = $::elk::params::rmq_pass,
+  $rmq_admin      = $::elk::params::rmq_admin,
+  $rmq_key        = $::elk::params::rmq_key,
+  $cluster        = $::elk::params::logstash_mq,
+  $erlang_cookie  = $::elk::params::erlang_cookie,) inherits ::elk::params {
   # Prerequisites
-  class { '::rabbitmq': package_provider => 'yum' }
+  class { '::rabbitmq': 
+    package_provider => 'yum',
+    cluster       => $cluster,
+    erlang_cookie => $erlang_cookie,
+  }
 
   rabbitmq_vhost { 'logstash': ensure => present, }
 
