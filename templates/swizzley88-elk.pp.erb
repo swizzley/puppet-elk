@@ -133,7 +133,15 @@ file { '/etc/puppet/puppet.conf':
 '
 }->
 <% else %>
-exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
+exec { 'provision': command => '/usr/bin/puppet module install puppetlabs-stdlib' }
+exec { 'provision': command => '/usr/bin/puppet module install puppetlabs-rabbitmq' }
+exec { 'provision': command => '/usr/bin/puppet module install puppetlabs-haproxy' }
+exec { 'provision': command => '/usr/bin/puppet module install puppetlabs-java' }
+exec { 'provision': command => '/usr/bin/puppet module install evenup-kibana' }
+exec { 'provision': command => '/usr/bin/puppet module install elasticsearch-elasticsearch' }
+exec { 'provision': command => '/usr/bin/puppet module install elasticsearch-logstash' }
+exec { 'provision': command => '/usr/bin/puppet module install elasticsearch-logstashforwarder' }
+#exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
 <% end %>
 $vagrant_start
 
