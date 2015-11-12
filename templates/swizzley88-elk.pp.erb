@@ -141,7 +141,7 @@ exec { 'kibana': command => '/usr/bin/puppet module install evenup-kibana' }
 exec { 'elasticsearch': command => '/usr/bin/puppet module install elasticsearch-elasticsearch' }
 exec { 'logstash': command => '/usr/bin/puppet module install elasticsearch-logstash' }
 exec { 'lumberjack': command => '/usr/bin/puppet module install elasticsearch-logstashforwarder' }
-exec { 'elk': command => '/usr/bin/git clone https://github.com/swizzley/puppet-elk.git /etc/puppet/modules/elk'
+exec { 'elk': command => '/usr/bin/git clone https://github.com/swizzley/puppet-elk.git /etc/puppet/modules/elk' }
 #exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
 <% end %>
 $vagrant_start
