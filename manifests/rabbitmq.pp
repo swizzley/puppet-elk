@@ -8,10 +8,10 @@ class elk::rabbitmq (
   $kib_cluster = $::elk::params::kib_cluster,
   $es          = $::elk::params::es_front,
   $logstash_mq = $::elk::params::logstash_mq,
-  $rmq_user    = $::elk::params::elk_rmq_user,
-  $rmq_pass    = $::elk::params::elk_rmq_pass,
-  $rmq_admin   = $::elk::params::elk_rmq_admin,
-  $rmq_key     = $::elk::params::elk_rmq_key,) inherits ::elk::params {
+  $rmq_user    = $::elk::params::rmq_user,
+  $rmq_pass    = $::elk::params::rmq_pass,
+  $rmq_admin   = $::elk::params::rmq_admin,
+  $rmq_key     = $::elk::params::rmq_key,) inherits ::elk::params {
   # Prerequisites
   include ::rabbitmq
 
