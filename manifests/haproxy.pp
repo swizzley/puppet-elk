@@ -3,14 +3,14 @@
 # This is a HA proxy for the frontend user interface Kibana
 #
 class elk::haproxy (
-  $kib_cluster     = $::elk::kib_cluster,
-  $kib_cluster_ips = $::elk::kib_cluster_ips,
-  $logstash_mq     = $::elk::logstash_mq,
-  $logstash_mq_ips = $::elk::logstash_mq_ips,
-  $es_cluster      = $::elk::es_cluster,
-  $es_cluster_ips  = $::elk::es_cluster_ips,
-  $log_cluster     = $::elk::log_cluster,
-  $log_cluster_ips = $::elk::log_cluster_ips,) inherits ::elk::params {
+  $kib_cluster     = $::elk::params::kib_cluster,
+  $kib_cluster_ips = $::elk::params::kib_cluster_ips,
+  $logstash_mq     = $::elk::params::logstash_mq,
+  $logstash_mq_ips = $::elk::lparams::ogstash_mq_ips,
+  $es_cluster      = $::elk::params::es_cluster,
+  $es_cluster_ips  = $::elk::params::es_cluster_ips,
+  $log_cluster     = $::elk::params::log_cluster,
+  $log_cluster_ips = $::elk::params::log_cluster_ips,) inherits ::elk::params {
   # Prerequisites
   include ::haproxy
   $elastic_cluster = suffix($es_cluster, ".${::domain}")
