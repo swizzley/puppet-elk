@@ -17,6 +17,7 @@ class elk::params {
     /.*-vg-v[1-9]d$/   : { 
                 $cluster_name = 'vagrant'
                 $es_cluster = grep($vagrant_cluster, 'es')
+                $es_cluster_ips = ['172.28.128.8', '172.28.128.9', '172.28.128.10']
                 $es_unicast_ip = '172.28.128.8, 172.28.128.9, 172.28.128.10'
                 $pvt_key = 'puppet:///modules/elk/logstash-forwarder-vagrant.key'
                 $cert = 'puppet:///modules/elk/logstash-forwarder-vagrant.crt'
