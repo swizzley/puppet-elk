@@ -11,7 +11,6 @@ $deploy_hiera_public = '<%= @pubkey_hiera %>'
 #Git Deploy Key
 $git_url = '<%= @git_host %>'
 $deploy_pvtkey_git_ID = '<%= @git_username %>'
-$vagrant_start = <%= @vagrant_start =%>
 
 
 if ($deploy_puppet_private == '' or $deploy_puppet_public == '' or $deploy_hiera_private == '' or $deploy_hiera_public == '' or 
@@ -144,5 +143,5 @@ exec { 'lumberjack': command => '/usr/bin/puppet module install elasticsearch-lo
 exec { 'elk': command => '/usr/bin/git clone https://github.com/swizzley/puppet-elk.git /etc/puppet/modules/elk' }->
 #exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
 <% end %>
-$vagrant_start
+exec {'initial puppet run': command => '/usr/bin/puppet apply -vt --debug -e "include elk" }
 
