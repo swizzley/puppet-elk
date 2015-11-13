@@ -15,9 +15,7 @@ class elk::logstash (
   class { '::logstash': 
       java_install => true,
       java_package => 'java-1.8.0-openjdk',
-      manage_repo  => true,
-      repo_version => '2.0.0',
-      version      => latest,
+      package_url  => 'https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.0.0-1.noarch.rpm',
   }
   #[TODO]include ::elk::logstash_patterns
 
