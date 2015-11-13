@@ -1,137 +1,7 @@
 
 
-#https://github.com/swizzley/puppet-elk/blob/master/templates/vagrant_site.erb
+#see https://github.com/swizzley/puppet-elk/blob/master/templates/vagrant_site.erb
 #
-<% if @secure_install %>
-# Configure the values for your forks
-$deploy_puppet_private = '<%= @pvtkey_puppet %>'
-$deploy_puppet_public = '<%= @pvbkey_puppet %>'
-$deploy_hiera_private = '<%= @pvtkey_hiera %>'
-$deploy_hiera_public = '<%= @pubkey_hiera %>'
-#Git Deploy Key
-$git_url = '<%= @git_host %>'
-$deploy_pvtkey_git_ID = '<%= @git_username %>'
-
-
-if ($deploy_puppet_private == '' or $deploy_puppet_public == '' or $deploy_hiera_private == '' or $deploy_hiera_public == '' or 
-$deploy_pvtkey_git_ID == '') {
-  fail('use ssh-keygen from cli to create keys and then goto your forks in github and paste the public keys into the deploy keys tab of each relative fork and also paste the public and private keys in as variables in your vagrant provisioning fork, along with your NTid... Lines 2-7 of this file.'
-  )
-}
-
-file { '/root/.ssh':
-  ensure => 'directory',
-  mode   => '0750',
-  owner  => 'root',
-  group  => 'root',
-} ->
-file { '/root/.ssh/id_rsa.puppet':
-  ensure  => 'present',
-  mode    => '0600',
-  owner   => 'root',
-  group   => 'root',
-  content => $deploy_puppet_private,
-} ->
-file { '/root/.ssh/id_rsa.puppet.pub':
-  ensure  => 'present',
-  mode    => '0640',
-  owner   => 'root',
-  group   => 'root',
-  content => $deploy_puppet_public,
-} ->
-file { '/root/.ssh/id_rsa.hiera':
-  ensure  => 'present',
-  mode    => '0600',
-  owner   => 'root',
-  group   => 'root',
-  content => $deploy_hiera_private,
-} ->
-file { '/root/.ssh/id_rsa.hiera.pub':
-  ensure  => 'present',
-  mode    => '0640',
-  owner   => 'root',
-  group   => 'root',
-  content => $deploy_hiera_public,
-} ->
-file { '/root/.ssh/config':
-  ensure  => 'present',
-  mode    => '0640',
-  owner   => 'root',
-  group   => 'root',
-  content => "
-Host            hiera
-    Hostname       ${git_url}/${deploy_pvtkey_git_ID}
-    IdentityFile    ~/.ssh/id_rsa.hiera
-    IdentitiesOnly yes 
-
-Host            puppet
-    Hostname        ${git_url}/${deploy_pvtkey_git_ID}
-    IdentityFile    ~/.ssh/id_rsa.puppet
-    IdentitiesOnly yes ",
-} ->
-file { '/root/.ssh/known_hosts':
-  ensure  => 'present',
-  mode    => '0640',
-  owner   => 'root',
-  group   => 'root',
-  content => ''
-}
-
-# Setup the code on the node
-exec { 'clone_puppet':
-  path    => '/usr/bin',
-  command => "git clone git@puppet:${deploy_pvtkey_git_ID}/Puppet.git /root/puppet",
-  unless  => 'test -f /root/puppet/manifests/site.pp',
-  require => File['/root/.ssh/known_hosts'],
-} ->
-file { '/etc/puppet/modules':
-  ensure => link,
-  force  => true,
-  target => '/root/puppet/modules'
-}
-
-exec { 'clone_hiera':
-  path    => '/usr/bin',
-  command => "git clone git@hiera:${deploy_pvtkey_git_ID}/Hiera.git /root/hiera",
-  unless  => 'test -f /root/hiera/hiera.yaml',
-  require => File['/root/.ssh/known_hosts'],
-} ->
-file { '/var/lib/hiera':
-  ensure => link,
-  force  => true,
-  target => '/root/hiera'
-} ->
-file { '/etc/hiera.yaml':
-  ensure => link,
-  force  => true,
-  target => '/root/hiera/hiera.yaml'
-} ->
-file { '/root/site.pp':
-  ensure => link,
-  target => '/root/puppet/manifests/site.pp'
-} ->
-file { '/var/lib/puppet/facts.d/.yaml':
-  ensure => link,
-  target => '/root/hiera/.yaml'
-} ->
-file { '/var/lib/puppet/facts.d/rabbitmq.yaml':
-  ensure => link,
-  target => '/root/hiera/rabbitmq.yaml'
-} ->
-file { "/var/lib/puppet/facts.d/${role}.yaml":
-  ensure => link,
-  target => "/root/hiera/vagrant/${role}.yaml"
-} ->
-file { '/etc/puppet/puppet.conf':
-  ensure  => present,
-  content => '
-  [main]
-  environment = vagrant
-  factpath = /var/lib/puppet/facts.d
-  
-'
-}->
-<% else %>
 exec { 'stdlib': command => '/usr/bin/puppet module install puppetlabs-stdlib' }->
 exec { 'rmq': command => '/usr/bin/puppet module install puppetlabs-rabbitmq' }->
 exec { 'haproxy': command => '/usr/bin/puppet module install puppetlabs-haproxy' }->
@@ -141,7 +11,6 @@ exec { 'elasticsearch': command => '/usr/bin/puppet module install elasticsearch
 exec { 'logstash': command => '/usr/bin/puppet module install elasticsearch-logstash' }->
 exec { 'lumberjack': command => '/usr/bin/puppet module install elasticsearch-logstashforwarder' }->
 exec { 'elk': command => '/usr/bin/git clone https://github.com/swizzley/puppet-elk.git /etc/puppet/modules/elk' }->
-#exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
-<% end %>
+#[TODO] exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
 exec {'initial puppet run': command => '/usr/bin/puppet apply -vt --debug -e "include elk" }
 
