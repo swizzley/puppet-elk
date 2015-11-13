@@ -10,7 +10,7 @@ $pubkey_hiera = ''
 # Git Deploy Key
 $git_host = ''
 $git_username = ''
-$vagrant_start = 'exec{\'initial puppet run\': command => \'/usr/bin/puppet apply -t /etc/puppet/manifests/site.pp\'}'
+$vagrant_start = 'exec{\'initial puppet run\': command => \'/usr/bin/puppet apply -vt --debug -e \'include elk\'}'
 
 # Configure Vagrant
 $vagrant_home = '/root'
