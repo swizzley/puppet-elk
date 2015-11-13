@@ -5,6 +5,7 @@
 class elk ($elk = $::elk::params::elk,
 $es_url = $::elk::params::es_url,
 $kibana_url = $::elk::params::kibana_url,
+$vagrant = $::elk::params::vagrant,
 ) inherits ::elk::params {
   case $elk {
     'Elastic'  : {
