@@ -19,7 +19,8 @@ class elk::haproxy (
   if ($::elk::elk != 'ELK') {
     haproxy::listen { 'kibana':
       mode      => 'tcp',
-      ipaddress => $::ipaddress,
+      ipaddress => $::ipaddress_eth1,
+      #[TODO]ipaddress => $::ipaddress,
       ports     => '80',
       options   => {
         'option'  => ['tcplog'],
@@ -38,7 +39,8 @@ class elk::haproxy (
 
     haproxy::listen { 'rabbitmq-server':
       mode      => 'tcp',
-      ipaddress => $::ipaddress,
+      ipaddress => $::ipaddress_eth1,
+      #[TODO]ipaddress => $::ipaddress,
       ports     => '5672',
       options   => {
         'option'  => ['tcplog'],
@@ -57,7 +59,8 @@ class elk::haproxy (
 
     haproxy::listen { 'rabbitmq-gui':
       mode      => 'tcp',
-      ipaddress => $::ipaddress,
+      ipaddress => $::ipaddress_eth1,
+      #[TODO]ipaddress => $::ipaddress,
       ports     => '15672',
       options   => {
         'option'  => ['tcplog'],
@@ -76,7 +79,8 @@ class elk::haproxy (
 
     haproxy::listen { 'elasticsearch-out':
       mode      => 'tcp',
-      ipaddress => $::ipaddress,
+      ipaddress => $::ipaddress_eth1,
+      #[TODO]ipaddress => $::ipaddress,
       ports     => '9200',
       options   => {
         'option'  => ['tcplog'],
@@ -95,7 +99,8 @@ class elk::haproxy (
     
     haproxy::listen { 'elasticsearch-in':
       mode      => 'tcp',
-      ipaddress => $::ipaddress,
+      ipaddress => $::ipaddress_eth1,
+      #[TODO]ipaddress => $::ipaddress,
       ports     => '9300',
       options   => {
         'option'  => ['tcplog'],
@@ -114,7 +119,8 @@ class elk::haproxy (
 
     haproxy::listen { 'lumberjack':
       mode      => 'tcp',
-      ipaddress => $::ipaddress,
+      ipaddress => $::ipaddress_eth1,
+      #[TODO]ipaddress => $::ipaddress,
       ports     => '5000',
       options   => {
         'option'  => ['tcplog'],
@@ -141,7 +147,8 @@ class elk::haproxy (
     } ->
     haproxy::listen { 'kibana':
       mode      => 'tcp',
-      ipaddress => $::ipaddress,
+      ipaddress => $::ipaddress_eth1,
+      #[TODO]ipaddress => $::ipaddress,
       ports     => '80',
       options   => {
         'option'  => ['tcplog'],
