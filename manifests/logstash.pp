@@ -19,8 +19,7 @@ class elk::logstash (
       package_url  => 'https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.0.0-1.noarch.rpm',
   }
   #[TODO]include ::elk::logstash_patterns
-  file { '/etc/pki/tls/certs/logstash-forwarder.crt': ensure => present, source => 'puppet:///modules/elk/logstash-forwarder.crt' }
-  file { '/etc/pki/tls/certs': ensure => directory, before => File['/etc/pki/tls/certs/logstash-forwarder.crt'] }
+  
   if ($::elk::elk == 'Logstash') {
     if ($::elk::vagrant == 'elk-vg-v1d'){
     $elk = $elk::vagrant
