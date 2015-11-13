@@ -21,7 +21,7 @@ class elk::logstash (
   #[TODO]include ::elk::logstash_patterns
 
   if ($::elk::elk == 'Logstash') {
-    if ($::elk::vagrant = 'elk-vg-v1d'){
+    if ($::elk::vagrant == 'elk-vg-v1d'){
     $elk = $elk::vagrant
     logstash::configfile { 'fullstack-begin':
       order   => 01,
