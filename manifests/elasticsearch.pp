@@ -51,6 +51,8 @@ define elk::elasticsearch (
         'index.search.slowlog.threshold.fetch.warn'             => '1s',
         'index.indexing.slowlog.threshold.index.warn'           => '10s',
         'network.tcp.keep_alive'   => true,
+        #[TODO] Vagrant up
+        'network.host' => $::ipaddress_eth1
         'swift.repository.enabled' => true,
       }
     }
