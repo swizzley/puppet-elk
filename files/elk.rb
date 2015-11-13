@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
             elk.vm.network :forwarded_port, guest: 9200, host: ei_port[svr_name], auto_correct: true
             elk.vm.network :forwarded_port, guest: 9300, host: eo_port[svr_name], auto_correct: true
             elk.vm.network :forwarded_port, guest: 80, host: hp_port[svr_name], auto_correct: true
-            elk.vm.network :private_network, ip: "#{svr_ip}"  
+            elk.vm.network :private_network, type: "dhcp"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
             log.vm.host_name = "#{svr_name.to_s}"  
             log.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             log.vm.network :forwarded_port, guest: 5000, host: ls_port[svr_name], auto_correct: true
-            log.vm.network :private_network, ip: "#{svr_ip}"  
+            log.vm.network :private_network, type: "dhcp"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -77,7 +77,7 @@ Vagrant.configure("2") do |config|
             mq.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             mq.vm.network :forwarded_port, guest: 5672, host: mq_port[svr_name], auto_correct: true
             mq.vm.network :forwarded_port, guest: 15672, host: mu_port[svr_name], auto_correct: true
-            mq.vm.network :private_network, ip: "#{svr_ip}"  
+            mq.vm.network :private_network, type: "dhcp"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
             es.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             es.vm.network :forwarded_port, guest: 9200, host: ei_port[svr_name], auto_correct: true
             es.vm.network :forwarded_port, guest: 9300, host: eo_port[svr_name], auto_correct: true
-            es.vm.network :private_network, ip: "#{svr_ip}"  
+            es.vm.network :private_network, type: "dhcp" 
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -114,7 +114,7 @@ Vagrant.configure("2") do |config|
             kib.vm.host_name = "#{svr_name.to_s}"  
             kib.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             kib.vm.network :forwarded_port, guest: 5601, host: kb_port[svr_name], auto_correct: true
-            kib.vm.network :private_network, ip: "#{svr_ip}"  
+            kib.vm.network :private_network, type: "dhcp"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
