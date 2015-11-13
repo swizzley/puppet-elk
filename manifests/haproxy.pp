@@ -13,7 +13,7 @@ class elk::haproxy (
   $log_cluster_ips = $::elk::log_cluster_ips,) inherits ::elk::params {
   # Prerequisites
   include ::haproxy
-  $elastic_cluster = suffix($es_cluster, $::domain)
+  $elastic_cluster = suffix($es_cluster, ".${::domain}")
 
   # LB Kibana
   if ($::elk::elk != 'ELK') {
