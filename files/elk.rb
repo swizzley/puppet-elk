@@ -20,15 +20,15 @@ Vagrant.configure("2") do |config|
       'es-vg-v1d' => 2092, 'es-vg-v2d' => 2093, 'es-vg-v3d' => 2094, 'elk-vg-v1d' => 2095
         }
         elk_servers  = { 
-        'elk-vg-v1d' => '10.0.2.24',
+        'elk-vg-v1d' => '172.28.128.3',
         }
-        log_servers  = { 'log-vg-v1d' => '10.0.2.15', 'log-vg-v2d' => '10.0.2.16',
+        log_servers  = { 'log-vg-v1d' => '172.28.128.4', 'log-vg-v2d' => '172.28.128.5',
         }
-        mq_servers  = { 'elkq-vg-v1d' => '10.0.2.17', 'elkq-vg-v2d' => '10.0.2.18',
+        mq_servers  = { 'elkq-vg-v1d' => '172.28.128.6', 'elkq-vg-v2d' => '172.28.128.7',
         }
-        es_servers  = { 'es-vg-v1d' => '10.0.2.19', 'es-vg-v2d' => '10.0.2.20', 'es-vg-v3d' => '10.0.2.21', 
+        es_servers  = { 'es-vg-v1d' => '172.28.128.8', 'es-vg-v2d' => '172.28.128.9', 'es-vg-v3d' => '172.28.128.10', 
         }
-        kib_servers  = {'kib-vg-v1d' => '10.0.2.22', 'kib-vg-v2d' => '10.0.2.23',
+        kib_servers  = {'kib-vg-v1d' => '172.28.128.11', 'kib-vg-v2d' => '172.28.128.12',
         }
     elk_servers.each do |svr_name, svr_ip|
         config.vm.define svr_name do |elk|
@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
             elk.vm.network :forwarded_port, guest: 9200, host: ei_port[svr_name], auto_correct: true
             elk.vm.network :forwarded_port, guest: 9300, host: eo_port[svr_name], auto_correct: true
             elk.vm.network :forwarded_port, guest: 80, host: hp_port[svr_name], auto_correct: true
-            elk.vm.network :private_network, type: "dhcp"  
+            elk.vm.network :private_network, ip: "#{svr_ip}"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
             log.vm.host_name = "#{svr_name.to_s}"  
             log.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             log.vm.network :forwarded_port, guest: 5000, host: ls_port[svr_name], auto_correct: true
-            log.vm.network :private_network, type: "dhcp"  
+            log.vm.network :private_network, ip: "#{svr_ip}"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -77,7 +77,7 @@ Vagrant.configure("2") do |config|
             mq.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             mq.vm.network :forwarded_port, guest: 5672, host: mq_port[svr_name], auto_correct: true
             mq.vm.network :forwarded_port, guest: 15672, host: mu_port[svr_name], auto_correct: true
-            mq.vm.network :private_network, type: "dhcp"  
+            mq.vm.network :private_network, ip: "#{svr_ip}"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
             es.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             es.vm.network :forwarded_port, guest: 9200, host: ei_port[svr_name], auto_correct: true
             es.vm.network :forwarded_port, guest: 9300, host: eo_port[svr_name], auto_correct: true
-            es.vm.network :private_network, type: "dhcp" 
+            es.vm.network :private_network, ip: "#{svr_ip}"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
@@ -114,7 +114,7 @@ Vagrant.configure("2") do |config|
             kib.vm.host_name = "#{svr_name.to_s}"  
             kib.vm.network :forwarded_port, guest: 22, host: ssh_port[svr_name], auto_correct: true  
             kib.vm.network :forwarded_port, guest: 5601, host: kb_port[svr_name], auto_correct: true
-            kib.vm.network :private_network, type: "dhcp"  
+            kib.vm.network :private_network, ip: "#{svr_ip}"  
 
         # virtualbox
         config.vm.provider "virtualbox" do |v|
