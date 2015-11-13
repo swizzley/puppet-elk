@@ -11,4 +11,45 @@ exec { 'lumberjack': command => '/usr/bin/puppet module install elasticsearch-lo
 exec { 'purge': command => '/bin/rm -rf /etc/puppet/modules/elk' }->
 exec { 'elk': command => '/usr/bin/git clone https://github.com/swizzley/puppet-elk.git /etc/puppet/modules/elk', creates =>  '/etc/puppet/modules/elk' }->
 #[TODO] exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
+file_line { 'elk-vg-v1d':
+  path => '/etc/hosts',
+  line => "172.28.128.3 elk-vg-v1d elk-vg-v1d.${::domain}",
+}->
+file_line { 'log-vg-v1d':
+  path => '/etc/hosts',
+  line => "172.28.128.4 log-vg-v1d log-vg-v1d.${::domain}",
+}->
+file_line { 'log-vg-v2d':
+  path => '/etc/hosts',
+  line => "172.28.128.5 log-vg-v2d log-vg-v2d.${::domain}",
+}->
+file_line { 'elkq-vg-v1d':
+  path => '/etc/hosts',
+  line => "172.28.128.6 elkq-vg-v1d elkq-vg-v1d.${::domain}",
+}->
+file_line { 'elkq-vg-v2d':
+  path => '/etc/hosts',
+  line => "172.28.128.7 elkq-vg-v2d elkq-vg-v2d.${::domain}",
+}->
+file_line { 'es-vg-v1d':
+  path => '/etc/hosts',
+  line => "172.28.128.8 es-vg-v1d es-vg-v1d.${::domain}",
+}->
+file_line { 'es-vg-v2d':
+  path => '/etc/hosts',
+  line => "172.28.128.9 es-vg-v2d es-vg-v2d.${::domain}",
+}->
+file_line { 'es-vg-v3d':
+  path => '/etc/hosts',
+  line => "172.28.128.10 es-vg-v3d es-vg-v3d.${::domain}",
+}->
+file_line { 'kib-vg-v1d':
+  path => '/etc/hosts',
+  line => "172.28.128.11 kib-vg-v1d kib-vg-v1d.${::domain}",
+}->
+file_line { 'kib-vg-v2d':
+  path => '/etc/hosts',
+  line => "172.28.128.12 kib-vg-v2d kib-vg-v2d.${::domain}",
+}->
+
 exec {'initial puppet run': command => '/usr/bin/puppet apply -vt --debug -e \'include elk\'' }
