@@ -17,15 +17,15 @@ class elk::params {
     /.*-vg-v[1-9]d$/   : { 
                 $cluster_name = 'vagrant'
                 $es_cluster = grep($vagrant_cluster, 'es')
-                $es_unicast_ip = '10.0.2.19, 10.0.2.20, 10.0.2.21'
+                $es_unicast_ip = '172.28.128.8, 172.28.128.9, 172.28.128.10'
                 $pvt_key = 'puppet:///modules/elk/logstash-forwarder-vagrant.key'
                 $cert = 'puppet:///modules/elk/logstash-forwarder-vagrant.crt'
                 $log_cluster = grep($vagrant_cluster, 'log')
-                $log_cluster_ips = ['10.0.2.15', '10.0.2.16']
+                $log_cluster_ips = ['172.28.128.4', '172.28.128.5']
                 $kib_cluster = grep($vagrant_cluster, 'kib')
-                $kib_cluster_ips = ['10.0.2.22', '10.0.2.23']
+                $kib_cluster_ips = ['172.28.128.11', '172.28.128.12']
                 $logstash_mq = grep($vagrant_cluster, 'elkq')
-                $logstash_mq_ips = ['10.0.2.17', '10.0.2.18']
+                $logstash_mq_ips = ['172.28.128.6', '172.28.128.7']
                 $erlang_cookie = 'LOGSTASHVAGRANTLOGST'
                 $config = 'elk/rabbitmq.config.erb'
     } # Vagrant Cluster
