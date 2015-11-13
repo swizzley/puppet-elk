@@ -56,6 +56,7 @@ class elk::params {
       }
     /^log-vg-v[1-9]d$/  : {
         $elk = 'Logstash'
+        $vagrant = 'elk-vg-v1d'
       }
     /^kib-vg-v[1-9]d$/   : {
         $elk = 'Kibana'
