@@ -52,7 +52,7 @@ define elk::elasticsearch (
         'index.indexing.slowlog.threshold.index.warn'           => '10s',
         'network.tcp.keep_alive'   => true,
         #[TODO] Vagrant up
-        'network.host' => $::ipaddress_eth1
+        'network.host' => $::ipaddress_eth1,
         'swift.repository.enabled' => true,
       }
     }
