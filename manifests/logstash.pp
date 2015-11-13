@@ -5,7 +5,7 @@
 # lumberjack-in should always have the LOWEST order number
 # lumberjack-out should always have the HIGHEST order number
 class elk::logstash (
-  $rmq_user      = $elk::rmq_user,
+  $rmq_user      = $::elk::rmq_user,
   $rmq_pass      = $::elk::rmq_pass,
   $rmq_admin     = $::elk::rmq_admin,
   $rmq_key       = $::elk::rmq_key,) inherits ::elk::params {
