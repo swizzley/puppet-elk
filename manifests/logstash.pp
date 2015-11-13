@@ -8,7 +8,8 @@ class elk::logstash (
   $rmq_user      = $::elk::rmq_user,
   $rmq_pass      = $::elk::rmq_pass,
   $rmq_admin     = $::elk::rmq_admin,
-  $rmq_key       = $::elk::rmq_key,) inherits ::elk::params {
+  $rmq_key       = $::elk::rmq_key,
+  $vagrant       = $::elk::vagrant,) inherits ::elk::params {
   # Prerequisites
   include ::elk::java
   require ::elk::java
