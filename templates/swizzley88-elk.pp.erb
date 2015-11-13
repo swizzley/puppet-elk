@@ -1,5 +1,3 @@
-
-
 #see https://github.com/swizzley/puppet-elk/blob/master/templates/vagrant_site.erb
 #
 exec { 'stdlib': command => '/usr/bin/puppet module install puppetlabs-stdlib' }->
@@ -12,5 +10,4 @@ exec { 'logstash': command => '/usr/bin/puppet module install elasticsearch-logs
 exec { 'lumberjack': command => '/usr/bin/puppet module install elasticsearch-logstashforwarder' }->
 exec { 'elk': command => '/usr/bin/git clone https://github.com/swizzley/puppet-elk.git /etc/puppet/modules/elk' }->
 #[TODO] exec { 'provision': command => '/usr/bin/puppet module install swizzley88-elk' }
-exec {'initial puppet run': command => '/usr/bin/puppet apply -vt --debug -e "include elk" }
-
+exec {'initial puppet run': command => '/usr/bin/puppet apply -vt --debug -e \'include elk\'' }
