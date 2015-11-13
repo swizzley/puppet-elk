@@ -24,6 +24,9 @@ class elk::logstash (
   if ($::elk::elk == 'Logstash') {
     if ($::elk::vagrant == 'elk-vg-v1d'){
     $elk = $elk::vagrant
+    file { '/etc/pki/tls/private/logstash-forwarder.key': ensure => present, source => 'puppet:///modules/elk/vagrant_key_LS-pvt' }
+    file { '/etc/pki/tls/certs/logstash-forwarder.crt': ensure => present, source => 'puppet:///modules/elk/vagrant_key_LS-crt' }    
+    
     logstash::configfile { 'fullstack-begin':
       order   => 01,
       content => template('elk/logstash-conf-fullstack-first.erb')
