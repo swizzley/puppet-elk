@@ -21,6 +21,8 @@ class elk::logstash (
   #[TODO]include ::elk::logstash_patterns
 
   if ($::elk::elk == 'Logstash') {
+    if ($::elk::vagrant = 'elk-vg-v1d'){
+    $elk = $elk::vagrant
     logstash::configfile { 'fullstack-begin':
       order   => 01,
       content => template('elk/logstash-conf-fullstack-first.erb')
@@ -38,7 +40,7 @@ class elk::logstash (
       mode    => '0664',
       content => template('elk/logstash-elasticsearch-yaml.erb')
     } ~> Service['logstash']
-
+}
   } else {
     # This is for full-stack node to do testing in staging
     logstash::configfile { 'fullstack-begin':
