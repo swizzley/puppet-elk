@@ -1,4 +1,4 @@
-# Scout-Vagrant
+# Vagrant 
 
 **Table of Contents**
 
