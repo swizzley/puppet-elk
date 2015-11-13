@@ -17,7 +17,7 @@ output {
     }
     if "lumberjack" not in [tags] {
         if "rabbitmq" not in [tags] {
-            elasticsearch { host => "<%= @elk %>"}
+            elasticsearch { hosts => "<%= @elk %>"}
             #stdout { codec => rubydebug }
         }
     }
