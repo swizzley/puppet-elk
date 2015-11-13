@@ -17,6 +17,7 @@ class elk::logstash (
       java_package => 'java-1.8.0-openjdk',
       manage_repo  => true,
       repo_version => '2.0.0',
+      version      => latest,
   }
   #[TODO]include ::elk::logstash_patterns
 
