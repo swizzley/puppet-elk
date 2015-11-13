@@ -12,7 +12,12 @@ class elk::logstash (
   # Prerequisites
   include ::elk::java
   require ::elk::java
-  include ::logstash
+  class { '::logstash': 
+      java_install => true,
+      java_package => 'java-1.8.0-openjdk',
+      manage_repo  => true,
+      repo_version => '1.0',
+  }
   #[TODO]include ::elk::logstash_patterns
 
   if ($::elk::elk == 'Logstash') {
