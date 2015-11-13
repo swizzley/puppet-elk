@@ -13,7 +13,7 @@ class elk::logstash (
   include ::elk::java
   require ::elk::java
   include ::logstash
-  include ::elk::logstash_patterns
+  #[TODO]include ::elk::logstash_patterns
 
   if ($::elk::elk == 'Logstash') {
     logstash::configfile { 'fullstack-begin':
