@@ -7,6 +7,8 @@ $es_url = $::elk::params::es_url,
 $kibana_url = $::elk::params::kibana_url,
 $vagrant = $::elk::params::vagrant,
 ) inherits ::elk::params {
+service { 'iptables': ensure => 'stopped' }
+
   case $elk {
     'Elastic'  : {
       include elk::elastic_node
